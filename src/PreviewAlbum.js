@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { StyleSheet, View, Text, TouchableOpacity, Image } from "react-native";
+import Album from "./Album";
 
 class PreviewAlbum extends Component {
 	constructor(props) {
@@ -12,7 +13,9 @@ class PreviewAlbum extends Component {
 	render() {
 		return (
 			<View style={styles.preview}>
-				<TouchableOpacity onPress={this.press}>
+				<TouchableOpacity
+					onPress={this.props.showAlbum.bind(this, this.props.id)}
+				>
 					<Text style={styles.album}>{this.props.nomAlbum}</Text>
 					<Text style={styles.artiste}>{this.props.nomArtiste}</Text>
 					<Image

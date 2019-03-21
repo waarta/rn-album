@@ -14,8 +14,8 @@ class ItemListe extends Component {
 
 	componentDidMount() {}
 
-	async showPreview(id) {
-		console.log("show", id);
+	showPreview(id) {
+		console.log("showprev");
 		this.setState({
 			showPreview: !this.state.showPreview
 		});
@@ -27,6 +27,7 @@ class ItemListe extends Component {
 				nomAlbum={this.props.nomAlbum}
 				id={this.props.id}
 				nomArtiste={this.props.nomArtiste}
+				showAlbum={this.props.showAlbum.bind(this)}
 			/>
 		) : null;
 		return (

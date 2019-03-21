@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
 import ItemListe from "./ItemListe";
+import Album from "./Album";
 
 const axios = require("axios");
 
@@ -11,12 +12,20 @@ class Liste extends Component {
 			tri: "nom",
 			albums: [],
 			page: 0,
-			nbPages: 0
+			nbPages: 0,
+			showAlbum: false
 		};
 	}
 
 	componentDidMount() {
 		this.getAlbum();
+	}
+
+	showAlbum() {
+		console.log("showalbum");
+		this.setState({
+			showAlbum: !this.state.showAlbum
+		});
 	}
 
 	getAlbum() {
@@ -46,42 +55,48 @@ class Liste extends Component {
 
 	render() {
 		//console.log("state", this.state.albums);
-		return (
-			<View>
-				<View style={styles.header}>
-					<TouchableOpacity
-						style={styles.buttonTri}
-						onPress={this.setTri.bind(this, "artiste")}
-					>
-						<Text>Artiste</Text>
-					</TouchableOpacity>
-					<TouchableOpacity
-						style={styles.buttonTri}
-						onPress={this.setTri.bind(this, "ann%C3%A9e")}
-					>
-						<Text>Année</Text>
-					</TouchableOpacity>
-					<TouchableOpacity
-						style={styles.buttonTri}
-						onPress={this.setTri.bind(this, "genre")}
-					>
-						<Text>Genre</Text>
-					</TouchableOpacity>
-				</View>
-				<View style={styles.list}>
-					{this.state.albums.map((alb, i) => {
-						return (
-							<ItemListe
-								key={"album_" + i}
-								nomAlbum={alb.nom}
-								id={alb.id}
-								nomArtiste={alb.artiste.nom}
-							/>
-						);
-					})}
-				</View>
-			</View>
-		);
+		let res = "";
+
+		this.state.showAlbum
+			? (res = <Album />)
+			: (res = (
+					<View>
+						<View style={styles.header}>
+							<TouchableOpacity
+								style={styles.buttonTri}
+								onPress={this.setTri.bind(this, "artiste")}
+							>
+								<Text>Artiste</Text>
+							</TouchableOpacity>
+							<TouchableOpacity
+								style={styles.buttonTri}
+								onPress={this.setTri.bind(this, "ann%C3%A9e")}
+							>
+								<Text>Année</Text>
+							</TouchableOpacity>
+							<TouchableOpacity
+								style={styles.buttonTri}
+								onPress={this.setTri.bind(this, "genre")}
+							>
+								<Text>Genre</Text>
+							</TouchableOpacity>
+						</View>
+						<View style={styles.list}>
+							{this.state.albums.map((alb, i) => {
+								return (
+									<ItemListe
+										key={"album_" + i}
+										nomAlbum={alb.nom}
+										id={alb.id}
+										nomArtiste={alb.artiste.nom}
+										showAlbum={this.showAlbum.bind(this, alb.id)}
+									/>
+								);
+							})}
+						</View>
+					</View>
+			  ));
+		return res;
 	}
 }
 const styles = StyleSheet.create({
