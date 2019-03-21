@@ -33,26 +33,38 @@ class Liste extends Component {
 			})
 			.then(res => {
 				if (res != undefined) {
-					console.log(res.data);
+					//console.log(res.data);
 					this.setState({ albums: res.data.albums });
 				}
 			});
 	}
 
-	setTri(tri) {}
+	setTri(tri) {
+		this.setState({ tri: tri });
+		this.getAlbum();
+	}
 
 	render() {
-		console.log("state", this.state.albums);
+		//console.log("state", this.state.albums);
 		return (
 			<View>
 				<View style={styles.header}>
-					<TouchableOpacity style={styles.buttonTri} onPress={this.onPress}>
+					<TouchableOpacity
+						style={styles.buttonTri}
+						onPress={this.setTri.bind(this, "artiste")}
+					>
 						<Text>Artiste</Text>
 					</TouchableOpacity>
-					<TouchableOpacity style={styles.buttonTri} onPress={this.onPress}>
+					<TouchableOpacity
+						style={styles.buttonTri}
+						onPress={this.setTri.bind(this, "ann%C3%A9e")}
+					>
 						<Text>Année</Text>
 					</TouchableOpacity>
-					<TouchableOpacity style={styles.buttonTri} onPress={this.onPress}>
+					<TouchableOpacity
+						style={styles.buttonTri}
+						onPress={this.setTri.bind(this, "genre")}
+					>
 						<Text>Genre</Text>
 					</TouchableOpacity>
 				</View>
@@ -62,6 +74,7 @@ class Liste extends Component {
 							<ItemListe
 								key={"album_" + i}
 								nomAlbum={alb.nom}
+								id={alb.id}
 								nomArtiste={alb.artiste.nom}
 							/>
 						);
@@ -73,7 +86,7 @@ class Liste extends Component {
 }
 const styles = StyleSheet.create({
 	container: {
-		justifyContent: "space-between"
+		//justifyContent: "space-between"
 	},
 	buttonTri: {
 		backgroundColor: "#DDDDDD",
