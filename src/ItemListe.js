@@ -15,7 +15,6 @@ class ItemListe extends Component {
 	componentDidMount() {}
 
 	showPreview(id) {
-		console.log("showprev");
 		this.setState({
 			showPreview: !this.state.showPreview
 		});

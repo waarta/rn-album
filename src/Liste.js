@@ -13,7 +13,8 @@ class Liste extends Component {
 			albums: [],
 			page: 0,
 			nbPages: 0,
-			showAlbum: false
+			showAlbum: false,
+			currentAlbum: 0
 		};
 	}
 
@@ -21,10 +22,10 @@ class Liste extends Component {
 		this.getAlbum();
 	}
 
-	showAlbum() {
-		console.log("showalbum");
+	showAlbum(id) {
 		this.setState({
-			showAlbum: !this.state.showAlbum
+			showAlbum: !this.state.showAlbum,
+			currentAlbum: id
 		});
 	}
 
@@ -42,7 +43,6 @@ class Liste extends Component {
 			})
 			.then(res => {
 				if (res != undefined) {
-					//console.log(res.data);
 					this.setState({ albums: res.data.albums });
 				}
 			});
@@ -58,7 +58,7 @@ class Liste extends Component {
 		let res = "";
 
 		this.state.showAlbum
-			? (res = <Album />)
+			? (res = <Album id={this.state.currentAlbum} />)
 			: (res = (
 					<View>
 						<View style={styles.header}>
