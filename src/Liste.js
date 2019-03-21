@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
+import ItemListe from "./ItemListe";
 
 const axios = require("axios");
 
@@ -33,6 +34,7 @@ class Liste extends Component {
 			.then(res => {
 				if (res != undefined) {
 					console.log(res.data);
+					this.setState({ albums: res.data.albums });
 				}
 			});
 	}
@@ -40,6 +42,7 @@ class Liste extends Component {
 	setTri(tri) {}
 
 	render() {
+		console.log("state", this.state.albums);
 		return (
 			<View>
 				<View style={styles.header}>
@@ -52,6 +55,17 @@ class Liste extends Component {
 					<TouchableOpacity style={styles.buttonTri} onPress={this.onPress}>
 						<Text>Genre</Text>
 					</TouchableOpacity>
+				</View>
+				<View style={styles.list}>
+					{this.state.albums.map((alb, i) => {
+						return (
+							<ItemListe
+								key={"album_" + i}
+								nomAlbum={alb.nom}
+								nomArtiste={alb.artiste.nom}
+							/>
+						);
+					})}
 				</View>
 			</View>
 		);
@@ -69,7 +83,8 @@ const styles = StyleSheet.create({
 	header: {
 		flexDirection: "row",
 		justifyContent: "space-between"
-	}
+	},
+	list: {}
 });
 
 export default Liste;
